@@ -1,9 +1,7 @@
 package sample;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -29,10 +27,13 @@ public class DateSorter {
 
     public static void main(String[] args) {
         DateSorter dateSorter = new DateSorter();
-        System.out.println(dateSorter.sortDates(List.of(LocalDate.of(2004, 07, 01),
-                LocalDate.of(2005, 01, 02),
-                LocalDate.of(2007, 01, 01),
-                LocalDate.of(2032, 05, 03))));
+        List<LocalDate> localDates = new ArrayList<>();
+        localDates.add(LocalDate.of(2004, 07, 01));
+        localDates.add(LocalDate.of(2005, 01, 02));
+        localDates.add(LocalDate.of(2007, 01, 01));
+        localDates.add(null);
+        localDates.add(LocalDate.of(2032, 05, 03));
+        System.out.println(dateSorter.sortDates2(localDates));
     }
 
     /**
@@ -57,11 +58,13 @@ public class DateSorter {
             throw new IllegalArgumentException("unsortedDates can't be null");
         }
         List<LocalDate> datesWithR = unsortedDates.stream()
+                .filter(Objects::nonNull)
                 .filter(date -> date.getMonth().toString().toLowerCase().contains("r"))
                 .sorted()
                 .collect(Collectors.toList());
 
         List<LocalDate> datesWithoutR = unsortedDates.stream()
+                .filter(Objects::nonNull)
                 .filter(date -> !date.getMonth().toString().toLowerCase().contains("r"))
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
@@ -75,6 +78,7 @@ public class DateSorter {
             throw new IllegalArgumentException("unsortedDates can't be null");
         }
         return unsortedDates.stream()
+                .filter(Objects::nonNull)
                 .sorted((date1, date2) -> {
                     boolean isMonthR1 = date1.getMonth().toString().toLowerCase().contains("r");
                     boolean isMonthR2 = date2.getMonth().toString().toLowerCase().contains("r");
