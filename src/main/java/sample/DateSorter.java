@@ -53,6 +53,9 @@ public class DateSorter {
      */
 
     public Collection<LocalDate> sortDates(List<LocalDate> unsortedDates) {
+        if (unsortedDates == null) {
+            throw new IllegalArgumentException("unsortedDates can't be null");
+        }
         List<LocalDate> datesWithR = unsortedDates.stream()
                 .filter(date -> date.getMonth().toString().toLowerCase().contains("r"))
                 .sorted()
@@ -68,6 +71,9 @@ public class DateSorter {
     }
 
     public Collection<LocalDate> sortDates2(List<LocalDate> unsortedDates) {
+        if (unsortedDates == null) {
+            throw new IllegalArgumentException("unsortedDates can't be null");
+        }
         return unsortedDates.stream()
                 .sorted((date1, date2) -> {
                     boolean isMonthR1 = date1.getMonth().toString().toLowerCase().contains("r");
